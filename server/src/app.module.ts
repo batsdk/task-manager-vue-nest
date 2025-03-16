@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
@@ -7,19 +7,26 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT!, 10) || 5432,
-      username: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASS || '123456',
-      database: process.env.DB_NAME || 'taskdb',
-      autoLoadEntities: true,
-      synchronize: true, // Development Only
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration]
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('database.host'),
+        port: configService.get('database.port'),
+        username: configService.get('database.username'),
+        password: configService.get('database.password'),
+        entities: [__dirname + "/**/*.entity{.ts,.js}"],
+        synchronize: configService.get('database.synchronize'),
+      }),
     }),
     TasksModule,
     AuthModule,
