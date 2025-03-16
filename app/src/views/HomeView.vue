@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <h1>Home</h1>
   </main>
 </template>
+
+<style scoped>
+  h1 {
+    font-size:8rem;
+  }
+</style>
