@@ -3,12 +3,6 @@
 
 <template>
   <main>
-    <h1>Home</h1>
+    <h1 class="text-3xl font-bold underline" >Home</h1>
   </main>
 </template>
-
-<style scoped>
-  h1 {
-    font-size:8rem;
-  }
-</style>

@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>Login Vue</h1>
+    <h1 class="text-3xl font-bold underline" >Login Page Here</h1>
   </div>
 </template>
