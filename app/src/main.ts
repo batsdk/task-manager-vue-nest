@@ -9,11 +9,13 @@ import router from './router'
 import "./index.css"
 import 'vuestic-ui/styles/essential.css';
 import 'vuestic-ui/styles/typography.css';
+import { VueQueryPlugin } from '@tanstack/vue-query'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
 app.use(createVuestic())
+app.use(VueQueryPlugin)
 
 app.mount('#app')

@@ -2,6 +2,11 @@
   <div>
     <VaForm class="flex flex-col justify-center gap-1 min-w-full items-center min-h-full" @submit.prevent="onSubmit">
 
+      <h1 class="text-2xl font-bold" >Login</h1>
+      <p>Create a new account here</p>
+      <RouterLink to="/auth/register">Create a new account here!</RouterLink>
+
+
       <VaInput name="username" v-model="username" type="email" label="username" />
       <span class="text-red-400" >{{ errors.username }}</span>
 
@@ -21,7 +26,14 @@ import { z } from 'zod';
 
 const userSchema = z.object({
   username: z.string().min(5, { message: 'username is required' }),
-  password: z.string().min(1, { message: 'Password is required' }).min(8, { message: 'Password must be at least 8 characters' }),
+  password: z
+    .string()
+    .min(1, { message: 'Password is required' })
+    .min(8, { message: 'Password must be at least 8 characters' })
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d!@#$%^&*])/,
+      { message: 'Password is too weak. Include uppercase, lowercase, and numbers or special characters.' }
+    )
 });
 
 const validationSchema = toTypedSchema(userSchema);

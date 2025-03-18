@@ -20,12 +20,17 @@ const router = createRouter({
       name: 'login',
       component: () => import("@/views/LoginView.vue"),
     },
+    {
+      path: '/auth/register',
+      name: 'register',
+      component: () => import("@/views/RegisterView.vue"),
+    },
   ],
 })
 
 router.beforeEach((to,_,next) => {
   if(to.meta.requiresAuth && !isAuthenticated()){
-    next('auth/login');
+    next('/auth/login');
   } else {
     next();
   }
