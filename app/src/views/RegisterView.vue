@@ -72,6 +72,10 @@ const onSubmit = handleSubmit(async (values) => {
     router.push('/');
 
   } catch (error) {
+    toast.notify({
+      title: 'Error',
+      message: error.message,
+    });
     console.error(error);
   }
 });

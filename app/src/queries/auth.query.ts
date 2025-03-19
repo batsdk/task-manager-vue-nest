@@ -11,3 +11,13 @@ export const useAuthRegister = () => {
   });
 
 }
+export const useAuthLogin = () => {
+
+  return useMutation({
+    mutationFn: async (user: { username: string; password: string }) => {
+      const response = await api.post('/auth/login', user);
+      return response.data;
+    },
+  });
+
+}
